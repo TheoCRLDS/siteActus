@@ -1,0 +1,8 @@
+nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+  align-items: center;
+  background-color: darkgray;
+  margin: 1rem;
+}
