@@ -7,12 +7,18 @@ import { useState, useEffect } from "react";
 function Search() {
   // Variables d'état
   const [actus, setActus] = useState([{}]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("?");
+  const [input, setInput] = useState("");
 
   // Fonctions
 
   const getInput = (e) => {
-    setSearch(e.target.value);
+    setInput(e.target.value);
+  };
+
+  const saveInput = () => {
+    setSearch(input);
+    console.log("Search : ", search);
   };
 
   const getNewsResponse = async () => {
@@ -31,9 +37,11 @@ function Search() {
       );
     });
   };
+
   useEffect(() => {
-    getNewsResponse();
-  }, []);
+    getNewsResponse(), [search, input];
+  }, [search, input]);
+
   return (
     <>
       <div>
@@ -49,6 +57,7 @@ function Search() {
           placeholder="Rechercher"
           onChange={getInput}
         />
+        <button onClick={saveInput}>Rechercher</button>
       </div>
       <div className="actus">{renderActus()}</div>
       <div>
