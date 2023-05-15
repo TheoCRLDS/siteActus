@@ -12,18 +12,23 @@ function Home() {
 
   const getNewsResponse = async () => {
     let topNewsResponse = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=fr&category=technology&pageSize=4&apiKey=ed2f043a457a4d36b0f63c4425bf102d`
+      `https://newsapi.org/v2/top-headlines?country=us&category=technology&pageSize=4&apiKey=ed2f043a457a4d36b0f63c4425bf102d`
     );
-    console.log("topNewsResponse : ", topNewsResponse);
     let topNewsDonnees = await topNewsResponse.json();
-    console.log("topNewsDonnees : ", topNewsDonnees);
-    setActus(topNewsDonnees);
+    setActus(topNewsDonnees.articles);
     console.log("actus : ", actus);
   };
 
+  const renderActus = () => {
+    return actus.map((e, key) => {
+      return (
+        <Actus key={key} image={e.urlToImage} title={e.title} actu={e.url} />
+      );
+    });
+  };
   useEffect(() => {
-    console.log("Update actus : ", actus), [actus];
-  });
+    getNewsResponse();
+  }, []);
 
   return (
     <>
@@ -35,7 +40,7 @@ function Home() {
       <div className="accueilContainer">
         <h1>Accueil</h1>
         <h4>Top actus : </h4>
-        <div className="actus">{getNewsResponse()}</div>
+        <div className="actus">{renderActus()}</div>
       </div>
       <div>
         <footer>
